@@ -1,7 +1,12 @@
 import { create } from "ipfs-http-client";
 
 export default async function upload(data: any) {
-    const auth = "to-do"
+    const projectId = process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
+
+    const projectSecret = process.env.NEXT_PUBLIC_INFURA_API_KEY
+
+    const auth = 'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');
+
     const ipfs = create({
         host: 'ipfs.infura.io',
         port: 5001,
