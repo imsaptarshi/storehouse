@@ -282,7 +282,7 @@ export default function Dashboard() {
                 </MenuList>
               </Menu>
             </Flex>
-            <Box overflow="auto" position="relative" h="full" pb="20">
+            <Box overflow="auto" position="relative" h="full" pb="20" pl="2">
               <Text color="white" fontSize="2xl">
                 Recently Uploaded
               </Text>

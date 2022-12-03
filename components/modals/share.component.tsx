@@ -14,6 +14,7 @@ import {
   Badge,
   CloseButton,
   Input,
+  Spinner,
 } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
 import {
@@ -32,16 +33,40 @@ import {
   useWalletConnect,
 } from "@thirdweb-dev/react";
 import config from "../../utils/helpers/config";
+import { ethers } from "ethers";
+import shareFile from "../../utils/helpers/shareFile";
 
-export default function Share({ isOpen, onClose }: any) {
+export default function Share({ isOpen, onClose, file }: any) {
   const address = useAddress();
   const [, switchNetwork]: any = useNetwork();
   const [r_address, setRAddress] = useState("");
-
-  const onShare = async () => {};
+  const [isLoading, setIsLoading] = useState(false);
+  const onShare = async () => {
+    setIsLoading(true);
+    const provider = new ethers.providers.JsonRpcProvider(
+      "https://eth-mainnet-public.unifra.io"
+    );
+    if (r_address.endsWith(".eth")) {
+      const receiver: any = await provider.resolveName(r_address);
+      await shareFile(file, receiver);
+      console.log(receiver);
+    } else {
+      await shareFile(file, r_address);
+    }
+    setIsLoading(false);
+    onClose();
+  };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="sm">
+    <Modal
+      isOpen={isOpen}
+      onClose={() => {
+        if (!isLoading) {
+          onClose();
+        }
+      }}
+      size="sm"
+    >
       <ModalOverlay bg="blackAlpha.800" />
 
       <ModalContent
@@ -52,7 +77,14 @@ export default function Share({ isOpen, onClose }: any) {
         border="solid white 2px"
       >
         <Box position="absolute" right="-8" top="-8" bg="white" rounded="full">
-          <CloseButton color="black" onClick={onClose} />
+          <CloseButton
+            color="black"
+            onClick={() => {
+              if (!isLoading) {
+                onClose();
+              }
+            }}
+          />
         </Box>
 
         <ModalHeader>
@@ -113,11 +145,13 @@ export default function Share({ isOpen, onClose }: any) {
               role="group"
               _hover={{}}
               _active={{}}
+              isLoading={isLoading}
+              disabled={isLoading}
               _focus={{}}
               onClick={() => {
-                //to-do
+                onShare();
               }}
-              leftIcon={<FaFileUpload />}
+              leftIcon={!isLoading ? <FaFileUpload /> : <Spinner />}
             >
               <Flex direction="column" experimental_spaceY="2">
                 <Text color="white" fontFamily="secondary" fontWeight="normal">
