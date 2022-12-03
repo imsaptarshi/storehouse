@@ -7,7 +7,7 @@ import {
   Link,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import Navbar from "../components/navigation/navbar.component";
 import { FaCloudUploadAlt, FaThLarge } from "react-icons/fa";
@@ -15,6 +15,7 @@ import WalletConnect from "../components/modals/connect.component";
 import uploadFile from "../utils/helpers/uploadFile";
 import { ConnectWallet, useAddress } from "@thirdweb-dev/react";
 import Approve from "../components/modals/approve.component";
+import { getAllEnsLinked } from "../utils/helpers/resolveEns";
 
 export default function Home() {
   const address: any = useAddress();
@@ -33,6 +34,7 @@ export default function Home() {
     },
     [address]
   );
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   const {
     isOpen: isApproveOpen,

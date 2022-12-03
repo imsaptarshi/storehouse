@@ -1,10 +1,11 @@
-import { ethers } from "ethers";
+import { ethers, Wallet } from "ethers";
 import config from "./config";
 import CryptoJs from "crypto-js";
 import { v4 as uuidv4 } from 'uuid';
 import getBase64 from "./base64";
 import upload from "./uploadToIPFS";
 import { flexbox } from "@chakra-ui/react";
+import * as PushAPI from "@pushprotocol/restapi";
 
 declare let window: any;
 export default async function uploadMultipleFiles(files: any, address: string) {
@@ -50,7 +51,27 @@ export default async function uploadMultipleFiles(files: any, address: string) {
                 console.log(_files)
                 const transaction = await contract.uploadMultipleFiles(_files);
                 await transaction.wait();
-
+                const PK = process.env.NEXT_PUBLIC_PRIVATE_KEY; // channel private key
+                const Pkey = `0x${PK}`;
+                const _signer: any = await new Wallet(Pkey);
+                const apiResponse = await PushAPI.payloads.sendNotification({
+                    signer: _signer,
+                    type: 3, // target
+                    identityType: 2, // direct payload
+                    notification: {
+                        title: `Upload Successful!`,
+                        body: `${files.length} files uploaded`
+                    },
+                    payload: {
+                        title: `Upload Successful!`,
+                        body: `${files.length} files uploaded`,
+                        cta: '',
+                        img: '/assets/uploaded.svg'
+                    },
+                    recipients: 'eip155:5:' + address, // recipient address
+                    channel: 'eip155:5:0x2213BE51bFC4E1863DB937ae821a155CF2F3bc13', // your channel address
+                    env: 'staging'
+                });
                 return transaction;
             } catch (err) {
                 console.log(err);

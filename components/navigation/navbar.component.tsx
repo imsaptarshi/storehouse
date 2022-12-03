@@ -13,7 +13,9 @@ import {
   MenuIcon,
 } from "@chakra-ui/react";
 import { useAddress, useDisconnect } from "@thirdweb-dev/react";
+import { useState, useEffect } from "react";
 import { FaCaretDown, FaSignOutAlt, FaWallet } from "react-icons/fa";
+import { getAllEnsLinked } from "../../utils/helpers/resolveEns";
 import WalletConnect from "../modals/connect.component";
 
 export default function Navbar() {
@@ -24,8 +26,19 @@ export default function Navbar() {
   } = useDisclosure();
 
   const disconnect = useDisconnect();
+  const [ens, setEns] = useState("");
+  const address: any = useAddress();
 
-  const address = useAddress();
+  useEffect(() => {
+    if (address) {
+      _getAllEnsLinked();
+    }
+  }, [address]);
+  const _getAllEnsLinked = async () => {
+    const n = await getAllEnsLinked(address);
+    console.log("ens", n);
+    setEns(n.data.domains[0].name);
+  };
   return (
     <Flex py="6" w="100%" justify="space-between">
       <WalletConnect isOpen={isConnectOpen} onClose={onConnectClose} />
@@ -48,12 +61,14 @@ export default function Navbar() {
           >
             <Flex alignItems="center" experimental_spaceX={2}>
               <Box>
-                <Avatar name={address} size="sm" />
+                <Avatar name={ens || address} size="sm" />
               </Box>
               <Text>
-                {address.slice(0, 4) +
-                  "..." +
-                  address.slice(address.length - 4)}
+                {ens
+                  ? ens
+                  : address.slice(0, 4) +
+                    "..." +
+                    address.slice(address.length - 4)}
               </Text>
               <FaCaretDown />
             </Flex>

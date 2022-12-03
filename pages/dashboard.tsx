@@ -19,9 +19,11 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import {
+  FaBell,
   FaCaretDown,
   FaFile,
   FaImage,
+  FaRegBell,
   FaSearch,
   FaSignOutAlt,
   FaThLarge,
@@ -37,14 +39,21 @@ import React from "react";
 import { useDropzone } from "react-dropzone";
 import Approve from "../components/modals/approve.component";
 import WalletConnect from "../components/modals/connect.component";
+import getNotifactions from "../utils/helpers/getNotifications";
+import { ethers, Wallet } from "ethers";
+import * as PushAPI from "@pushprotocol/restapi";
+import { getAllEnsLinked } from "../utils/helpers/resolveEns";
 
+declare let window: any;
 export default function Dashboard() {
   const [tab, setTab] = useState("dashboard");
   const address: any = useAddress();
+  const [ens, setEns] = useState("");
   const disconnect = useDisconnect();
   const [files, setFiles] = useState<any>([]);
   const [newFiles, setNewFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [notifications, setNotifications] = useState([]);
   const [query, setQuery] = useState("");
   const onDrop = useCallback(
     async (acceptedFiles: any) => {
@@ -76,8 +85,16 @@ export default function Dashboard() {
   useEffect(() => {
     if (address) {
       _getFiles();
+      _getNotifications();
+      _getAllEnsLinked();
     }
   }, [address]);
+
+  const _getAllEnsLinked = async () => {
+    const n = await getAllEnsLinked(address);
+    console.log("ens", n);
+    setEns(n.data.domains[0].name);
+  };
 
   const _getFiles = async () => {
     setIsLoading(true);
@@ -85,6 +102,11 @@ export default function Dashboard() {
     console.log(f);
     setFiles(f);
     setIsLoading(false);
+  };
+
+  const _getNotifications = async () => {
+    const n: any = await getNotifactions(address);
+    setNotifications(n);
   };
 
   return (
@@ -259,57 +281,122 @@ export default function Dashboard() {
                   type="search"
                 />
               </InputGroup>
-              <Menu>
-                <MenuButton
-                  bg="black"
-                  fontFamily="secondary"
-                  color="white"
-                  ring="1px"
-                  ringColor="whiteAlpha.500"
-                  _focus={{}}
-                  _hover={{ bg: "whiteAlpha.100" }}
-                  _active={{}}
-                  fontWeight="normal"
-                  rounded="lg"
-                  p="2"
-                  py="1.5"
-                >
-                  <Flex alignItems="center" experimental_spaceX={2}>
-                    <Box>
-                      <Avatar name={address} size="sm" />
-                    </Box>
-                    <Text>
-                      {address.slice(0, 4) +
-                        "..." +
-                        address.slice(address.length - 4)}
-                    </Text>
-                    <FaCaretDown />
-                  </Flex>
-                </MenuButton>
-                <MenuList
-                  bg="whiteAlpha.600"
-                  border="none"
-                  rounded="xl"
-                  backdropFilter="blur(20px)"
-                >
-                  <MenuItem
-                    bg="transparent"
+              <Flex experimental_spaceX={3}>
+                <Menu>
+                  <MenuButton
+                    bg="black"
+                    fontFamily="secondary"
                     color="white"
-                    textAlign="center"
-                    onClick={() => {
-                      disconnect();
-                      window.location.href = "/";
+                    ring="1px"
+                    ringColor="whiteAlpha.500"
+                    _focus={{}}
+                    _hover={{ bg: "whiteAlpha.100" }}
+                    _active={{}}
+                    fontWeight="normal"
+                    onClick={async () => {
+                      if (address) {
+                        const n: any = await getNotifactions(address);
+                        setNotifications(n);
+                      }
                     }}
+                    rounded="lg"
+                    p="3.5"
+                    py="1.5"
                   >
-                    <MenuIcon mr="2">
-                      <FaSignOutAlt />
-                    </MenuIcon>
-                    Disconnect
-                  </MenuItem>
-                </MenuList>
-              </Menu>
+                    <FaRegBell />
+                  </MenuButton>
+                  <MenuList
+                    bg="blackAlpha.300"
+                    backdropFilter="blur(20px) drop-shadow(0px 4px 54px rgba(0, 0, 0, 0.74))"
+                    borderWidth="1px"
+                    rounded="2xl"
+                    borderColor="whiteAlpha.400"
+                  >
+                    {notifications.slice(0, 6).map((data: any, key) => (
+                      <MenuItem key={key} bg="transparent">
+                        <MenuIcon
+                          borderWidth="2px"
+                          rounded="xl"
+                          borderColor="whiteAlpha.600"
+                          bg="whiteAlpha.300"
+                          p="2"
+                        >
+                          <Image src={data.image} alt={data.image} w="8" />
+                        </MenuIcon>
+                        <Text
+                          fontFamily="secondary"
+                          fontWeight="medium"
+                          color="whiteAlpha.900"
+                          fontSize="sm"
+                          ml="2"
+                        >
+                          {" "}
+                          {data.title}
+                          <br />
+                          {data.notification.body}
+                        </Text>
+                      </MenuItem>
+                    ))}
+                  </MenuList>
+                </Menu>
+                <Menu>
+                  <MenuButton
+                    bg="black"
+                    fontFamily="secondary"
+                    color="white"
+                    ring="1px"
+                    ringColor="whiteAlpha.500"
+                    _focus={{}}
+                    _hover={{ bg: "whiteAlpha.100" }}
+                    _active={{}}
+                    fontWeight="normal"
+                    rounded="lg"
+                    p="2"
+                    py="1.5"
+                  >
+                    <Flex alignItems="center" experimental_spaceX={2}>
+                      <Box>
+                        <Avatar name={ens || address} size="sm" />
+                      </Box>
+                      <Text>
+                        {ens ? (
+                          <>{ens}</>
+                        ) : (
+                          <>
+                            {address.slice(0, 4) +
+                              "..." +
+                              address.slice(address.length - 4)}
+                          </>
+                        )}
+                      </Text>
+                      <FaCaretDown />
+                    </Flex>
+                  </MenuButton>
+                  <MenuList
+                    bg="whiteAlpha.600"
+                    border="none"
+                    rounded="xl"
+                    backdropFilter="blur(20px)"
+                  >
+                    <MenuItem
+                      bg="transparent"
+                      color="white"
+                      textAlign="center"
+                      onClick={() => {
+                        disconnect();
+                        window.location.href = "/";
+                      }}
+                    >
+                      <MenuIcon mr="2">
+                        <FaSignOutAlt />
+                      </MenuIcon>
+                      Disconnect
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              </Flex>
             </Flex>
-            {files.length == 0 && !isLoading && (
+            {files?.length == 0 && !isLoading && (
               <Box color="whiteAlpha.600" w="fit-content" mx="auto">
                 🐝Start by uploading a file ...
               </Box>
@@ -319,7 +406,7 @@ export default function Dashboard() {
                 <Spinner />
               </Box>
             )}
-            {files.length > 0 && (
+            {files?.length > 0 && (
               <>
                 {query.length > 0 ? (
                   <>

@@ -34,6 +34,7 @@ import Share from "../modals/share.component";
 import prettyBytes from "pretty-bytes";
 import deleteFile from "../../utils/helpers/deleteFile";
 import Deleting from "../modals/deleting.component";
+import { useAddress } from "@thirdweb-dev/react";
 
 export default function File({ file, callback }: any) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -49,6 +50,7 @@ export default function File({ file, callback }: any) {
   const [image, setImage] = useState<any>(undefined);
   const [video, setVideo] = useState<any>(undefined);
   const [document, setDocument] = useState<any>(undefined);
+  const address: any = useAddress();
 
   const getImage = async () => {
     setLoading(true);
@@ -337,7 +339,7 @@ export default function File({ file, callback }: any) {
                   icon={<FaTrash />}
                   onClick={async () => {
                     setIsDeleting(true);
-                    await deleteFile(file);
+                    await deleteFile(file, address);
                     setIsDeleting(false);
                     callback();
                   }}
