@@ -1,0 +1,255 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address payable",
+        "name": "file_owner",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "file_receiver",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "file_name",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "file_path",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "file_uid",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "file_type",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "file_size",
+        "type": "uint256"
+      }
+    ],
+    "name": "FileShared",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address payable",
+        "name": "file_owner",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "file_name",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "file_path",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "file_uid",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "file_type",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "file_size",
+        "type": "uint256"
+      }
+    ],
+    "name": "FileUploaded",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "_file_path",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_file_name",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_file_uid",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_file_type",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_file_size",
+        "type": "uint256"
+      }
+    ],
+    "name": "shareFile",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_file_path",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_file_name",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_file_uid",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_file_type",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_file_size",
+        "type": "uint256"
+      }
+    ],
+    "name": "uploadFile",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address payable",
+            "name": "file_owner",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "file_name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "file_path",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "file_uid",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "file_type",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "file_size",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Storehouse.File[]",
+        "name": "_files",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "uploadMultipleFiles",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getFiles",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address payable",
+            "name": "file_owner",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "file_name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "file_path",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "file_uid",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "file_type",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "file_size",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Storehouse.File[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
