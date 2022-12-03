@@ -149,13 +149,13 @@ export default function File({ file, callback }: any) {
       >
         <Box
           onClick={async () => {
-            if (file.file_type.startsWith("image")) {
+            if (file.file_type.startsWith("image") && image) {
               const url = await b64toBlob(image);
               window.open(url, "_blank");
-            } else if (file.file_type.startsWith("video")) {
+            } else if (file.file_type.startsWith("video") && video) {
               const url = await b64toBlob(video);
               window.open(url, "_blank");
-            } else if (file.file_type.startsWith("application")) {
+            } else if (file.file_type.startsWith("application") && document) {
               const url = await b64toBlob(document);
               window.open(url, "_blank");
             }

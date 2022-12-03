@@ -45,6 +45,7 @@ export default function Dashboard() {
   const [files, setFiles] = useState<any>([]);
   const [newFiles, setNewFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [query, setQuery] = useState("");
   const onDrop = useCallback(
     async (acceptedFiles: any) => {
       setNewFiles(acceptedFiles);
@@ -148,6 +149,10 @@ export default function Dashboard() {
                 _hover={{ bg: "rgba(209, 133, 255, 0.25)" }}
                 color={tab == "dashboard" ? "#D6A1FF" : "#FEEDFF"}
                 fontFamily="secondary"
+                onClick={() => {
+                  setTab("dashboard");
+                  setQuery("");
+                }}
                 fontWeight="normal"
                 fontSize="lg"
               >
@@ -166,6 +171,10 @@ export default function Dashboard() {
                 color={tab == "image" ? "#D6A1FF" : "#FEEDFF"}
                 fontFamily="secondary"
                 fontWeight="normal"
+                onClick={() => {
+                  setTab("image");
+                  setQuery("image");
+                }}
                 fontSize="lg"
               >
                 Image
@@ -179,6 +188,10 @@ export default function Dashboard() {
                     <FaVideo />
                   </Box>
                 }
+                onClick={() => {
+                  setTab("video");
+                  setQuery("video");
+                }}
                 _hover={{ bg: "rgba(209, 133, 255, 0.25)" }}
                 color={tab == "video" ? "#D6A1FF" : "#FEEDFF"}
                 fontFamily="secondary"
@@ -189,6 +202,10 @@ export default function Dashboard() {
               </Button>
               <Button
                 justifyContent="left"
+                onClick={() => {
+                  setTab("document");
+                  setQuery("application");
+                }}
                 bg="transparent"
                 w="full"
                 leftIcon={
@@ -222,7 +239,10 @@ export default function Dashboard() {
                   <FaSearch />
                 </InputLeftElement>
                 <Input
-                  onChange={() => {}}
+                  onChange={(e) => {
+                    setQuery(e.target.value);
+                  }}
+                  value={query}
                   mr="4"
                   minW={{ base: "30px", md: "300px", lg: "400px" }}
                   placeholder="Search for a file"
@@ -276,7 +296,10 @@ export default function Dashboard() {
                     bg="transparent"
                     color="white"
                     textAlign="center"
-                    onClick={disconnect}
+                    onClick={() => {
+                      disconnect();
+                      window.location.href = "/";
+                    }}
                   >
                     <MenuIcon mr="2">
                       <FaSignOutAlt />
@@ -297,42 +320,88 @@ export default function Dashboard() {
               </Box>
             )}
             {files.length > 0 && (
-              <Box overflow="auto" position="relative" h="full" pb="20" pl="2">
-                <Text color="white" fontSize="2xl">
-                  Recently Uploaded
-                </Text>
-                <Flex wrap="wrap" mt="3">
-                  {files &&
-                    files.slice(0, 3).map((data: any, key: any) => (
-                      <Box
-                        mr="6"
-                        mb="6"
-                        w="full"
-                        key={key}
-                        maxW={{ md: "280px", xl: "320px" }}
-                      >
-                        <File key={key} file={data} callback={_getFiles} />
-                      </Box>
-                    ))}
-                </Flex>
-                <Text color="white" fontSize="2xl" mt="5">
-                  All Files
-                </Text>
-                <Flex wrap="wrap" mt="3">
-                  {files &&
-                    files.map((data: any, key: any) => (
-                      <Box
-                        mr="6"
-                        mb="6"
-                        w="full"
-                        key={key}
-                        maxW={{ md: "280px", xl: "320px" }}
-                      >
-                        <File key={key} file={data} callback={_getFiles} />
-                      </Box>
-                    ))}
-                </Flex>
-              </Box>
+              <>
+                {query.length > 0 ? (
+                  <>
+                    {" "}
+                    <Text color="white" fontSize="2xl">
+                      Searching {query}...
+                    </Text>
+                    <Flex wrap="wrap" mt="3">
+                      {files &&
+                        files.slice(0, 3).map((data: any, key: any) => {
+                          return (
+                            <>
+                              {(data.file_name
+                                .toLowerCase()
+                                .startsWith(query.toLowerCase()) ||
+                                data.file_type
+                                  .toLowerCase()
+                                  .startsWith(query.toLowerCase())) && (
+                                <Box
+                                  mr="6"
+                                  mb="6"
+                                  w="full"
+                                  key={key}
+                                  maxW={{ md: "280px", xl: "320px" }}
+                                >
+                                  <File
+                                    key={key}
+                                    file={data}
+                                    callback={_getFiles}
+                                  />
+                                </Box>
+                              )}
+                            </>
+                          );
+                        })}
+                    </Flex>
+                  </>
+                ) : (
+                  <Box
+                    overflow="auto"
+                    position="relative"
+                    h="full"
+                    pb="20"
+                    pl="2"
+                  >
+                    <Text color="white" fontSize="2xl">
+                      Recently Uploaded
+                    </Text>
+                    <Flex wrap="wrap" mt="3">
+                      {files &&
+                        files.slice(0, 3).map((data: any, key: any) => (
+                          <Box
+                            mr="6"
+                            mb="6"
+                            w="full"
+                            key={key}
+                            maxW={{ md: "280px", xl: "320px" }}
+                          >
+                            <File key={key} file={data} callback={_getFiles} />
+                          </Box>
+                        ))}
+                    </Flex>
+                    <Text color="white" fontSize="2xl" mt="5">
+                      All Files
+                    </Text>
+                    <Flex wrap="wrap" mt="3">
+                      {files &&
+                        files.map((data: any, key: any) => (
+                          <Box
+                            mr="6"
+                            mb="6"
+                            w="full"
+                            key={key}
+                            maxW={{ md: "280px", xl: "320px" }}
+                          >
+                            <File key={key} file={data} callback={_getFiles} />
+                          </Box>
+                        ))}
+                    </Flex>
+                  </Box>
+                )}
+              </>
             )}
           </Box>
         </Flex>

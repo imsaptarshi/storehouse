@@ -61,7 +61,7 @@ export default function Home() {
         onClose={onApproveClose}
         files={files}
         callback={() => {
-          window.open("/dashboard");
+          window.location.href = "/dashboard";
         }}
       />
       <WalletConnect isOpen={isConnectOpen} onClose={onConnectClose} />
@@ -143,7 +143,7 @@ export default function Home() {
               leftIcon={<FaThLarge />}
               onClick={() => {
                 if (address) {
-                  window.open("/dashboard");
+                  window.location.href = "/dashboard";
                 } else {
                   onConnectOpen();
                 }
