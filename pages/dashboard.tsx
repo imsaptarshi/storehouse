@@ -93,7 +93,11 @@ export default function Dashboard() {
   const _getAllEnsLinked = async () => {
     const n = await getAllEnsLinked(address);
     //console.log("ens", n);
-    setEns(n.data.domains[0].name);
+    if (n.data.domains[0].name) {
+      setEns(n.data.domains[0].name);
+    } else {
+      setEns("");
+    }
   };
 
   const _getFiles = async () => {
