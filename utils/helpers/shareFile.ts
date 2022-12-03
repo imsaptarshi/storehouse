@@ -8,7 +8,7 @@ import upload from "./uploadToIPFS";
 declare let window: any;
 export default async function shareFile(file: any, receiver: string) {
     console.log("uploading", file)
-    if (file.file_name.length < 1) return
+
     if (typeof window !== "undefined") {
         if (typeof window.ethereum !== "undefined") {
             const provider = new ethers.providers.Web3Provider(window.ethereum);

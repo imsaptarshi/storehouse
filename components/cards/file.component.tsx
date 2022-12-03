@@ -137,7 +137,7 @@ export default function File({ file, callback }: any) {
           : "#FFE5E5"
       }
     >
-      <Share isOpen={isShareOpen} onClose={onShareClose} />
+      <Share isOpen={isShareOpen} onClose={onShareClose} file={file} />
       <Deleting isOpen={isDeleting} onClose={() => {}} file={file} />
       <Box
         rounded="2xl"
