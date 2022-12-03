@@ -94,6 +94,19 @@
   {
     "inputs": [
       {
+        "internalType": "string",
+        "name": "uid",
+        "type": "string"
+      }
+    ],
+    "name": "deleteFile",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "receiver",
         "type": "address"

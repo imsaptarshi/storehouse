@@ -20,6 +20,7 @@ import {
   FaLink,
   FaPen,
   FaShare,
+  FaShareAlt,
   FaTrash,
   FaVideo,
 } from "react-icons/fa";
@@ -31,8 +32,10 @@ import CryptoJs from "crypto-js";
 import b64toBlob from "../../utils/helpers/blobUrl";
 import Share from "../modals/share.component";
 import prettyBytes from "pretty-bytes";
+import deleteFile from "../../utils/helpers/deleteFile";
+import Deleting from "../modals/deleting.component";
 
-export default function File({ file }: any) {
+export default function File({ file, callback }: any) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const {
@@ -135,6 +138,7 @@ export default function File({ file }: any) {
       }
     >
       <Share isOpen={isShareOpen} onClose={onShareClose} />
+      <Deleting isOpen={isDeleting} onClose={() => {}} file={file} />
       <Box
         rounded="2xl"
         overflow="hidden"
@@ -321,7 +325,7 @@ export default function File({ file }: any) {
               <MenuList>
                 <MenuItem
                   color="black"
-                  icon={<FaShare />}
+                  icon={<FaShareAlt />}
                   onClick={async () => {
                     onShareOpen();
                   }}
@@ -333,6 +337,9 @@ export default function File({ file }: any) {
                   icon={<FaTrash />}
                   onClick={async () => {
                     setIsDeleting(true);
+                    await deleteFile(file);
+                    setIsDeleting(false);
+                    callback();
                   }}
                 >
                   Delete

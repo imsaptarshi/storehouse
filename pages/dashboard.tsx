@@ -16,6 +16,7 @@ import {
   Text,
   Grid,
   useDisclosure,
+  Spinner,
 } from "@chakra-ui/react";
 import {
   FaCaretDown,
@@ -43,6 +44,7 @@ export default function Dashboard() {
   const disconnect = useDisconnect();
   const [files, setFiles] = useState<any>([]);
   const [newFiles, setNewFiles] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const onDrop = useCallback(
     async (acceptedFiles: any) => {
       setNewFiles(acceptedFiles);
@@ -77,9 +79,11 @@ export default function Dashboard() {
   }, [address]);
 
   const _getFiles = async () => {
+    setIsLoading(true);
     const f = await getFiles();
     console.log(f);
     setFiles(f);
+    setIsLoading(false);
   };
 
   return (
@@ -282,42 +286,54 @@ export default function Dashboard() {
                 </MenuList>
               </Menu>
             </Flex>
-            <Box overflow="auto" position="relative" h="full" pb="20" pl="2">
-              <Text color="white" fontSize="2xl">
-                Recently Uploaded
-              </Text>
-              <Flex wrap="wrap" mt="3">
-                {files &&
-                  files.slice(0, 3).map((data: any, key: any) => (
-                    <Box
-                      mr="6"
-                      mb="6"
-                      w="full"
-                      key={key}
-                      maxW={{ md: "280px", xl: "320px" }}
-                    >
-                      <File key={key} file={data} />
-                    </Box>
-                  ))}
-              </Flex>
-              <Text color="white" fontSize="2xl" mt="5">
-                All Files
-              </Text>
-              <Flex wrap="wrap" mt="3">
-                {files &&
-                  files.map((data: any, key: any) => (
-                    <Box
-                      mr="6"
-                      mb="6"
-                      w="full"
-                      key={key}
-                      maxW={{ md: "280px", xl: "320px" }}
-                    >
-                      <File key={key} file={data} />
-                    </Box>
-                  ))}
-              </Flex>
-            </Box>
+            {files.length == 0 && !isLoading && (
+              <Box color="whiteAlpha.600" w="fit-content" mx="auto">
+                🐝Start by uploading a file ...
+              </Box>
+            )}
+            {isLoading && (
+              <Box color="white" w="fit-content" mx="auto">
+                <Spinner />
+              </Box>
+            )}
+            {files.length > 0 && (
+              <Box overflow="auto" position="relative" h="full" pb="20" pl="2">
+                <Text color="white" fontSize="2xl">
+                  Recently Uploaded
+                </Text>
+                <Flex wrap="wrap" mt="3">
+                  {files &&
+                    files.slice(0, 3).map((data: any, key: any) => (
+                      <Box
+                        mr="6"
+                        mb="6"
+                        w="full"
+                        key={key}
+                        maxW={{ md: "280px", xl: "320px" }}
+                      >
+                        <File key={key} file={data} callback={_getFiles} />
+                      </Box>
+                    ))}
+                </Flex>
+                <Text color="white" fontSize="2xl" mt="5">
+                  All Files
+                </Text>
+                <Flex wrap="wrap" mt="3">
+                  {files &&
+                    files.map((data: any, key: any) => (
+                      <Box
+                        mr="6"
+                        mb="6"
+                        w="full"
+                        key={key}
+                        maxW={{ md: "280px", xl: "320px" }}
+                      >
+                        <File key={key} file={data} callback={_getFiles} />
+                      </Box>
+                    ))}
+                </Flex>
+              </Box>
+            )}
           </Box>
         </Flex>
       </Box>
