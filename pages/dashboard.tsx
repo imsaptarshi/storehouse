@@ -329,7 +329,7 @@ export default function Dashboard() {
                     </Text>
                     <Flex wrap="wrap" mt="3">
                       {files &&
-                        files.slice(0, 3).map((data: any, key: any) => {
+                        files.map((data: any, key: any) => {
                           return (
                             <>
                               {(data.file_name
