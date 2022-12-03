@@ -56,7 +56,14 @@ export default function Home() {
       p="0"
       id="landing"
     >
-      <Approve isOpen={isApproveOpen} onClose={onApproveClose} files={files} />
+      <Approve
+        isOpen={isApproveOpen}
+        onClose={onApproveClose}
+        files={files}
+        callback={() => {
+          window.open("/dashboard");
+        }}
+      />
       <WalletConnect isOpen={isConnectOpen} onClose={onConnectClose} />
       <Flex zIndex={1} position="relative" w="full" justifyContent="center">
         <Box maxWidth="1000px" px="30" w="100%" position="relative">
@@ -134,6 +141,13 @@ export default function Home() {
               ringColor="white"
               fontWeight="normal"
               leftIcon={<FaThLarge />}
+              onClick={() => {
+                if (address) {
+                  window.open("/dashboard");
+                } else {
+                  onConnectOpen();
+                }
+              }}
             >
               Open Dashboard
             </Button>
