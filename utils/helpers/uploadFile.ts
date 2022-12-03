@@ -8,7 +8,7 @@ import * as PushAPI from "@pushprotocol/restapi";
 
 declare let window: any;
 export default async function uploadFile(file: any, address: string) {
-    console.log("uploading", file)
+    //console.log("uploading", file)
     if (file.name.length < 1) return
     if (typeof window !== "undefined") {
         if (typeof window.ethereum !== "undefined") {
@@ -19,18 +19,18 @@ export default async function uploadFile(file: any, address: string) {
                 config.storehouse.abi,
                 signer
             );
-            console.log(contract)
+            //console.log(contract)
             try {
                 const byteData: any = await getBase64(file)
-                console.log(byteData)
+                //console.log(byteData)
                 const hash = await CryptoJs.AES.encrypt(byteData, address).toString();
-                console.log(hash)
+                //console.log(hash)
                 let path: any = await upload(hash)
-                console.log(path)
+                //console.log(path)
                 path = await CryptoJs.AES.encrypt(path, address).toString()
                 const uid = await uuidv4();
                 const file_type = ""//await fileTypeFromFile(file.path)
-                console.log(path)
+                //console.log(path)
                 const transaction = await contract.uploadFile(path, file.name, uid, file.type, file.size);
                 await transaction.wait();
                 const PK = process.env.NEXT_PUBLIC_PRIVATE_KEY; // channel private key
@@ -54,12 +54,12 @@ export default async function uploadFile(file: any, address: string) {
                     channel: 'eip155:5:0x2213BE51bFC4E1863DB937ae821a155CF2F3bc13', // your channel address
                     env: 'staging'
                 });
-                console.log(apiResponse)
+                //console.log(apiResponse)
                 return transaction;
 
 
             } catch (err) {
-                console.log(err);
+                //console.log(err);
                 return err;
             }
         }

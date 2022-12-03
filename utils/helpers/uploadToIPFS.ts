@@ -21,6 +21,6 @@ export default async function upload(data: any) {
 
     // the result contains the path
     // to the file on IPFS
-    console.log(result)
+    //console.log(result)
     return `https://storehouse.infura-ipfs.io/ipfs/${result.cid}`
 }

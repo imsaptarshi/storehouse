@@ -9,7 +9,7 @@ import * as PushAPI from "@pushprotocol/restapi";
 
 declare let window: any;
 export default async function uploadMultipleFiles(files: any, address: string) {
-    console.log("uploading", files)
+    //console.log("uploading", files)
     if (files.length < 1) return
     if (typeof window !== "undefined") {
         if (typeof window.ethereum !== "undefined") {
@@ -20,22 +20,22 @@ export default async function uploadMultipleFiles(files: any, address: string) {
                 config.storehouse.abi,
                 signer
             );
-            console.log(contract)
+            //console.log(contract)
             try {
                 let _files = []
                 let i = 0
                 while (i < files.length) {
                     let file = files[i]
                     const byteData: any = await getBase64(file)
-                    console.log(byteData)
+                    //console.log(byteData)
                     const hash = await CryptoJs.AES.encrypt(byteData, address).toString();
-                    console.log(hash)
+                    //console.log(hash)
                     let path: any = await upload(hash)
-                    console.log(path)
+                    //console.log(path)
                     path = await CryptoJs.AES.encrypt(path, address).toString()
                     const uid = await uuidv4();
                     const file_type = ""//await fileTypeFromFile(file.path)
-                    console.log(path)
+                    //console.log(path)
                     _files.push(
                         {
                             file_owner: address,
@@ -48,7 +48,7 @@ export default async function uploadMultipleFiles(files: any, address: string) {
                     )
                     i++
                 }
-                console.log(_files)
+                //console.log(_files)
                 const transaction = await contract.uploadMultipleFiles(_files);
                 await transaction.wait();
                 const PK = process.env.NEXT_PUBLIC_PRIVATE_KEY; // channel private key
@@ -74,7 +74,7 @@ export default async function uploadMultipleFiles(files: any, address: string) {
                 });
                 return transaction;
             } catch (err) {
-                console.log(err);
+                //console.log(err);
                 return err;
             }
         }

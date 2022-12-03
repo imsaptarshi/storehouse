@@ -28,7 +28,7 @@ export default async function getNotifactions(address: string) {
             _n.push(data)
         }
     })
-    console.log(n)
+    //console.log(n)
     return [...n, ..._n]
 
 }

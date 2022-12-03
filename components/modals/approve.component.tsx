@@ -41,7 +41,7 @@ export default function Approve({
   files,
   callback = null,
 }: any) {
-  console.log(files);
+  //console.log(files);
   const [coverImage, setCoverImage] = useState("");
   const address: any = useAddress();
   const [, switchNetwork]: any = useNetwork();

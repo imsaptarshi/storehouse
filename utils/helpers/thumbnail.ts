@@ -1,5 +1,5 @@
 export default function thumbnail(file: any, seekTo = 0.0) {
-    console.log("getting video cover for file: ", file);
+    //console.log("getting video cover for file: ", file);
     return new Promise((resolve, reject) => {
         // load the file to a video player
         const videoPlayer = document.createElement('video');
@@ -21,7 +21,7 @@ export default function thumbnail(file: any, seekTo = 0.0) {
             }, 200);
             // extract video thumbnail once seeking is complete
             videoPlayer.addEventListener('seeked', () => {
-                console.log('video is now paused at %ss.', seekTo);
+                //console.log('video is now paused at %ss.', seekTo);
                 // define a canvas to have the same dimension as the video
                 const canvas = document.createElement("canvas");
                 canvas.width = videoPlayer.videoWidth;

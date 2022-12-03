@@ -24,9 +24,9 @@ export default function Home() {
     async (acceptedFiles: any) => {
       setFiles(acceptedFiles);
       if (address) {
-        console.log(address);
+        //console.log(address);
         onApproveOpen();
-        console.log(acceptedFiles);
+        //console.log(acceptedFiles);
       } else {
         onApproveOpen();
         onConnectOpen();

@@ -8,7 +8,7 @@ import * as PushAPI from "@pushprotocol/restapi";
 
 declare let window: any;
 export default async function deleteFile(file: any, address: string) {
-    console.log("uploading", file)
+    //console.log("uploading", file)
     if (file.file_name.length < 1) return
     if (typeof window !== "undefined") {
         if (typeof window.ethereum !== "undefined") {
@@ -19,7 +19,7 @@ export default async function deleteFile(file: any, address: string) {
                 config.storehouse.abi,
                 signer
             );
-            console.log(contract)
+            //console.log(contract)
             try {
 
                 const transaction = await contract.deleteFile(file.file_uid);
@@ -47,7 +47,7 @@ export default async function deleteFile(file: any, address: string) {
                 });
                 return transaction;
             } catch (err) {
-                console.log(err);
+                //console.log(err);
                 return err;
             }
         }

@@ -17,7 +17,7 @@ export default async function getFiles() {
             );
             try {
                 const data = await contract.getFiles();
-                console.log(data)
+                //console.log(data)
                 let files: Array<any> = [];
                 data.forEach((file: any) => {
                     if (file.file_uid.length > 0) {
@@ -31,10 +31,10 @@ export default async function getFiles() {
                         })
                     }
                 });
-                console.log(files)
+                //console.log(files)
                 return files.reverse();
             } catch (err) {
-                console.log(err)
+                //console.log(err)
             }
         }
     }

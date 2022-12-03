@@ -58,9 +58,9 @@ export default function File({ file, callback }: any) {
       file.file_path,
       file.file_owner
     ).toString(CryptoJs.enc.Utf8);
-    console.log(path);
+    //console.log(path);
     let hash: any = await axios.get(path);
-    console.log(hash);
+    //console.log(hash);
     hash = hash.data;
     const byteData = await CryptoJs.AES.decrypt(hash, file.file_owner).toString(
       CryptoJs.enc.Utf8
@@ -75,19 +75,19 @@ export default function File({ file, callback }: any) {
       file.file_path,
       file.file_owner
     ).toString(CryptoJs.enc.Utf8);
-    console.log("video", path);
+    //console.log("video", path);
     try {
       let hash: any = await axios.get(path);
-      console.log("video", hash);
+      //console.log("video", hash);
       hash = hash.data;
       const byteData = await CryptoJs.AES.decrypt(
         hash,
         file.file_owner
       ).toString(CryptoJs.enc.Utf8);
-      console.log(byteData);
+      //console.log(byteData);
       setVideo(byteData);
     } catch (e) {
-      console.log(e);
+      //console.log(e);
     }
     setLoading(false);
   };
@@ -107,10 +107,10 @@ export default function File({ file, callback }: any) {
         hash,
         file.file_owner
       ).toString(CryptoJs.enc.Utf8);
-      console.log(byteData);
+      //console.log(byteData);
       setDocument(byteData);
     } catch (e) {
-      console.log(e);
+      //console.log(e);
     }
     setLoading(false);
   };

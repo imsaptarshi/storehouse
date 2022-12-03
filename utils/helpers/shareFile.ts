@@ -8,7 +8,7 @@ import * as PushAPI from "@pushprotocol/restapi";
 
 declare let window: any;
 export default async function shareFile(file: any, address: string, receiver: string, og: string) {
-    console.log("uploading", file)
+    //console.log("uploading", file)
 
     if (typeof window !== "undefined") {
         if (typeof window.ethereum !== "undefined") {
@@ -19,7 +19,7 @@ export default async function shareFile(file: any, address: string, receiver: st
                 config.storehouse.abi,
                 signer
             );
-            console.log(contract)
+            //console.log(contract)
             try {
 
                 const transaction = await contract.shareFile(receiver, file.file_path, file.file_name, file.file_uid, file.file_type, file.file_size);
@@ -48,7 +48,7 @@ export default async function shareFile(file: any, address: string, receiver: st
                 PK = process.env.NEXT_PUBLIC_PRIVATE_KEY; // channel private key
                 Pkey = `0x${PK}`;
                 _signer = await new Wallet(Pkey);
-                console.log(receiver, address)
+                //console.log(receiver, address)
                 const _apiResponse = await PushAPI.payloads.sendNotification({
                     signer: _signer,
                     type: 3, // target
@@ -67,10 +67,10 @@ export default async function shareFile(file: any, address: string, receiver: st
                     channel: 'eip155:5:0x2213BE51bFC4E1863DB937ae821a155CF2F3bc13', // your channel address
                     env: 'staging'
                 });
-                console.log("received", _apiResponse)
+                //console.log("received", _apiResponse)
                 return transaction;
             } catch (err) {
-                console.log(err);
+                //console.log(err);
                 return err;
             }
         }

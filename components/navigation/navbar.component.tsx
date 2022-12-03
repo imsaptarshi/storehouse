@@ -36,7 +36,7 @@ export default function Navbar() {
   }, [address]);
   const _getAllEnsLinked = async () => {
     const n = await getAllEnsLinked(address);
-    console.log("ens", n);
+    //console.log("ens", n);
     setEns(n.data.domains[0].name);
   };
   return (

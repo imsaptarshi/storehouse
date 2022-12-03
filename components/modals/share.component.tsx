@@ -49,7 +49,7 @@ export default function Share({ isOpen, onClose, file }: any) {
     if (r_address.endsWith(".eth")) {
       const receiver: any = await provider.resolveName(r_address);
       await shareFile(file, address, receiver, r_address);
-      console.log(receiver);
+      //console.log(receiver);
     } else {
       await shareFile(file, address, r_address, r_address);
     }

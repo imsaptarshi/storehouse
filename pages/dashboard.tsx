@@ -59,9 +59,9 @@ export default function Dashboard() {
     async (acceptedFiles: any) => {
       setNewFiles(acceptedFiles);
       if (address) {
-        console.log(address);
+        //console.log(address);
         onApproveOpen();
-        console.log(acceptedFiles);
+        //console.log(acceptedFiles);
       } else {
         onApproveOpen();
         onConnectOpen();
@@ -92,14 +92,14 @@ export default function Dashboard() {
 
   const _getAllEnsLinked = async () => {
     const n = await getAllEnsLinked(address);
-    console.log("ens", n);
+    //console.log("ens", n);
     setEns(n.data.domains[0].name);
   };
 
   const _getFiles = async () => {
     setIsLoading(true);
     const f = await getFiles();
-    console.log(f);
+    //console.log(f);
     setFiles(f);
     setIsLoading(false);
   };
