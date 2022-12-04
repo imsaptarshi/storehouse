@@ -28,7 +28,7 @@ Leveraging the use-cases of IPFS at the same time, we can enable users to depend
 - Share your files between other users on chain
 - Based on blockchain technology
 
-## 🌠 Uses
+## 🌠 Technologies used
 
 - NextJS [Frontend Framework]
 - Chakra UI [UI Framework]
