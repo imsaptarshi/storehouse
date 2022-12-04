@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./public/assets/logo.svg" width="700"/>
+  <img src="./public/banner.png" width="700"/>
   <br/><br/>
   <img alt="Stars" src="https://img.shields.io/badge/build-passing-brightgreen?style=for-the-badge">
   <img alt="Forks" src="https://img.shields.io/github/forks/imsaptarshi/storehouse?style=for-the-badge">

@@ -16,19 +16,19 @@ class NextDocument extends Document {
 
         <meta name="description" content={config.description} />
 
-        <meta property="og:url" content="https://to-do/" />
+        <meta property="og:url" content="https://0xstorehouse.vercel.app" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={config.title} />
         <meta property="og:description" content={config.description} />
         <meta property="og:image:type" content="image/png" />
-        <meta property="og:image" content="/banner_image.png" />
+        <meta property="og:image" content="/banner.png" />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta property="twitter:domain" content="to-do" />
         <meta property="twitter:url" content="https://to-do" />
         <meta name="twitter:title" content={config.title} />
         <meta name="twitter:description" content={config.description} />
-        <meta name="twitter:image" content="/banner_image.png" />
+        <meta name="twitter:image" content="/banner.png" />
       </Head>
       <body>
         <Main />
