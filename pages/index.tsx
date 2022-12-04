@@ -180,7 +180,7 @@ export default function Home() {
               backdropFilter="blur(20px)"
               border="white 2px dashed"
               rounded="40px"
-              minH="40vh"
+              minH={{ base: "50vh", xl: "40vh" }}
               bg="blackAlpha.400"
               direction="column"
               transitionDuration="300ms"

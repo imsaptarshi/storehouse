@@ -1,34 +1,45 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div align="center">
+  <img src="./public/assets/logo.svg" width="700"/>
+  <br/><br/>
+  <img alt="Stars" src="https://img.shields.io/badge/build-passing-brightgreen?style=for-the-badge">
+  <img alt="Forks" src="https://img.shields.io/github/forks/imsaptarshi/storehouse?style=for-the-badge">
+  <img alt="Stars" src="https://img.shields.io/github/stars/imsaptarshi/storehouse?style=for-the-badge">
+</div>
+<br>
 
-## Getting Started
+# 🚀 Storehouse <sup>beta</sup>
 
-First, run the development server:
+Secure cloud storage on-chain leveraging IPFS with better UX
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+Demo: https://0xstorehouse.vercel.app
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 💡 The Idea
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+In this modern world of technology, our data is in the hands of many big companies. Web 3.0 introduces the concept of decentralisation, in short, the flow and storage of data, without the need of any central authority.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+And Storehouse is based on the idea of decentralisation to make the most secure personal storage for one.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Leveraging the use-cases of IPFS at the same time, we can enable users to depend on IPFS as their cloud storage platform through Storehouse. Storehouse makes an easy interface for users to upload their encrypted files on IPFS and serving it as their cloud storage on-chain.
 
-## Learn More
+## ⭐ Features
 
-To learn more about Next.js, take a look at the following resources:
+- Store any kind of file in a seemlessly easy way on Polygon.
+- Dont worry about data piracy, your files are end-to-end encrypted
+- Share your files between other users on chain
+- Based on blockchain technology
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🌠 Uses
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- NextJS [Frontend Framework]
+- Chakra UI [UI Framework]
+- Polygon
+- IPFS / Filecoin
+- ENS
+- Push Protocol
+- Infura
+- Thirdweb
+- External Javascript Libraries
 
-## Deploy on Vercel
+## Contracts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Storehouse https://mumbai.polygonscan.com/address/0xc64a998AB01e1401181726cfd55831b9648fB522
